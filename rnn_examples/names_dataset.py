@@ -9,7 +9,7 @@ import torch
 class NamesDataset(Dataset):
     def __init__(self, data_dir: Path):
 
-        self.idx2char = list(string.ascii_lowercase + "'")
+        self.idx2char = [' '] + list(string.ascii_lowercase + "'")
         self.idx2lang = []
         self.lines = []
         self.labels = []
@@ -41,10 +41,11 @@ class NamesDataset(Dataset):
         return len(self.x)
 
     def __getitem__(self, idx):
-        return torch.tensor(self.x[idx]), self.y[idx]
+        return torch.tensor(self.x[idx]), self.y[idx], len(self.x[idx])
 
 
 if __name__ == "__main__":
     dset = NamesDataset(data_dir=Path("data/names"))
-    print(dset[7])
-    print(dset.lines[7])
+    print(dset[5700])
+    print(dset.lines[5700])
+    # print(dset.labels)
